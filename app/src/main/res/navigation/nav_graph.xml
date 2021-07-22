@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/SignInFragment">
+
+    <fragment
+        android:id="@+id/SignInFragment"
+        android:name="net.atos.vcs.realtime.demo.SignInFragment"
+        android:label="@string/sign_in_fragment_label"
+        tools:layout="@layout/sign_in_fragment">
+
+        <action
+            android:id="@+id/action_SignInFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_SignInFragment_to_roomActivity"
+            app:destination="@id/roomActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="net.atos.vcs.realtime.demo.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_SignInFragment"
+            app:destination="@id/SignInFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/roomActivity"
+        android:name="net.atos.vcs.realtime.demo.RoomActivity"
+        android:label="RoomActivity" >
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="roomName"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="audio"
+            app:argType="boolean" />
+        <argument
+            android:name="video"
+            app:argType="boolean" />
+        <argument
+            android:name="host"
+            app:argType="string" />
+        <argument
+            android:name="hdVideo"
+            app:argType="boolean" />
+    </activity>
+    />
+</navigation>

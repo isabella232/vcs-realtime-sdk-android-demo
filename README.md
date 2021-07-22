@@ -5,7 +5,7 @@ This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demo
 
 The demo app can be built to run on a device or the simulator. Note that the simulator does not provide video.
 
-Note the root gradle file contains a reference to the SDK and WebRTC
+The root gradle file contains the references to the SDK and WebRTC images
 ```xml
 ...
 allprojects {
