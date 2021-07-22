@@ -1,4 +1,5 @@
 # VCS Realtime SDK Sample App for Android
+![demo-screenshot](https://user-images.githubusercontent.com/4389724/126681575-494fd176-77e2-441b-89a1-ef007354d094.png)
 
 This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demonstrate how to join virtual rooms and interact with other participants via audio and/or video.
 ### Build and Run
