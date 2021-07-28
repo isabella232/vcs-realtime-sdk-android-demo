@@ -21,7 +21,7 @@ allprojects {
 The dependencies are also added to the app module (such as app/build.gradle):
 ```xml
 dependencies {
-    implementation 'atos.virtual.care:vcs-reatime-sdk:0.2.0'
+    implementation 'atos.virtual.care:vcs-realtime-sdk:0.2.0'
     implementation 'atos.virtual.care:libwebrtc:M90'
 }
 ```
