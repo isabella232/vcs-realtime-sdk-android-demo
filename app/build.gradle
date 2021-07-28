@@ -56,19 +56,14 @@ dependencies {
 
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
-    // Realtime SDK project
-    // implementation project(':realtime-sdk')
-    implementation files('../libs/vcs-realtime-sdk-debug.aar')
-
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
-    // realtime-sdk dependencies
-    implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-runtime:539cd9871c80da27161923b43b3b13935b8f60c4'
-    implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-api:539cd9871c80da27161923b43b3b13935b8f60c4'
+    // Realtime SDK
+    implementation 'atos.virtual.care:vcs-realtime-sdk:0.2.0'
 
     // WebRTC
     implementation 'atos.virtual.care:libwebrtc:M90'
