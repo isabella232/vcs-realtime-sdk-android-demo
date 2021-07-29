@@ -24,7 +24,7 @@ import net.atos.vcs.realtime.demo.databinding.RoomActivityBinding
 import net.atos.vcs.realtime.sdk.MediaStreamVideoView
 import net.atos.vcs.realtime.sdk.RealtimeSdk
 import net.atos.vcs.realtime.sdk.RemoteParticipant
-import net.atos.vcs.realtime.sdk.SessionOptions
+import net.atos.vcs.realtime.sdk.RoomOptions
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -90,15 +90,15 @@ class RoomActivity : AppCompatActivity() {
         setupListeners()
 
         // Join the room
-        viewModel.joinRoom(getRoomToken(), getSessionOptions())
+        viewModel.joinRoom(getRoomToken(), getRoomOptions())
     }
 
     private fun getRoomToken(): String {
         return args.token
     }
 
-    private fun getSessionOptions(): SessionOptions {
-        return SessionOptions(
+    private fun getRoomOptions(): RoomOptions {
+        return RoomOptions(
             host = args.host,
             audio = args.audio,
             video = args.video,
@@ -283,7 +283,7 @@ class RoomActivity : AppCompatActivity() {
 
         Log.d(TAG, "Remote participant to be added: ${participant.name()}")
         try {
-            inflater?.inflate(R.layout.remote_surface_view, null)?.let { view ->
+            inflater.inflate(R.layout.remote_surface_view, null)?.let { view ->
                 val count = binding.remoteViewsLayout.childCount
                 val data = layoutParameters[count]
 

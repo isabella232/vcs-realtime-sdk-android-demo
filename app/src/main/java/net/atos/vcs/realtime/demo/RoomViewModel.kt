@@ -86,7 +86,7 @@ class RoomViewModel(
         roomManager.resumeVideoRendering()
     }
 
-    fun joinRoom(token: String, options: SessionOptions) {
+    fun joinRoom(token: String, options: RoomOptions) {
         viewModelScope.launch {
             roomManager.joinRoom(token, options)
         }

@@ -23,7 +23,7 @@ class RoomManager(private val context: Context) {
     private var joinInProgress = false
     internal val roomScope = CoroutineScope(Dispatchers.IO)
 
-    fun joinRoom(token: String, options: SessionOptions) {
+    fun joinRoom(token: String, options: RoomOptions) {
         if (room != null || joinInProgress) {
             Log.d(TAG, "Room already joined or being joined, ignore.")
             return
