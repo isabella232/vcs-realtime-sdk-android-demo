@@ -2,23 +2,38 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="webrtc_category"
-        android:title="WebRTC">
+        android:key="server_config_category"
+        android:title="Settings">
+
+        <EditTextPreference
+            android:defaultValue="sdk-demo.virtualcareservices.net"
+            android:key="application_server"
+            android:title="Application server"
+            android:summary="Server that provides room tokens based on 'Room name' and API key" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="auto_gain_control"
-            android:title="Auto Gain Control" />
+            android:title="Automatic Gain Control"
+            android:summary="Enable or disable Automatic Gain Control on the audio track" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="default_hd_video"
-            android:title="HD Video" />
+            android:title="HD Video"
+            android:summary="Share local video in HD quality" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="delay_local_stream"
+            android:title="Delay local stream"
+            android:summary="If true, the local media stream is only created after least two participants are connected to a room" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="only_relay_candidates"
-            android:title="Only Relay ICE Candidates" />
+            android:title="Only Relay ICE Candidates"
+            android:summary="If true, restricts calls to go through a TURN server" />
 
     </PreferenceCategory>
 

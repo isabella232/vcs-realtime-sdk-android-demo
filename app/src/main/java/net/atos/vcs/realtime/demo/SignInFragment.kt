@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import net.atos.vcs.realtime.demo.applicationServer.Room
 import net.atos.vcs.realtime.demo.databinding.SignInFragmentBinding
-import net.atos.vcs.realtime.sdk.RealtimeSdkSettings
+import net.atos.vcs.realtime.sdk.RealtimeSettings
 import java.lang.Exception
 
 class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
@@ -71,11 +71,11 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.progressBar.visibility = View.GONE
 
         binding.joinButton.setOnClickListener {
-            getWaitingRoom(binding.roomName.editText?.text.toString())
+            getRoom(binding.roomName.editText?.text.toString())
         }
 
         binding.createButton.setOnClickListener {
-            createWaitingRoom(binding.roomName.editText?.text.toString())
+            createRoom(binding.roomName.editText?.text.toString())
         }
 
         binding.settingsButton.setOnClickListener {
@@ -103,37 +103,24 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setSpinnerSelection()
     }
 
-    private fun getWaitingRoom(roomName: String) {
+    private fun getRoom(roomName: String) {
         if (!roomName.isEmpty()) {
             binding.progressBar.visibility = View.VISIBLE
             binding.joinButton.isClickable = false
             binding.createButton.isClickable = false
 
-            viewModel.getConfiguration { config, error ->
-                config?.also {
-                    viewModel.getWaitingRoom(roomName) { room, error ->
-                        binding.progressBar.visibility = View.GONE
-                        binding.joinButton.isClickable = true
-                        binding.createButton.isClickable = true
+            viewModel.getRoom(roomName, RealtimeSettings.applicationServer()) { room, error ->
+                binding.progressBar.visibility = View.GONE
+                binding.joinButton.isClickable = true
+                binding.createButton.isClickable = true
 
-                        room?.also {
-                            Log.d(TAG, "room retrieved - name: ${room.room.name}, token: ${room.room.token}")
-                            navigateToRoom(room, config.VCS_HOST)
-                        }
-                        error?.also {
-                            Log.e(TAG, "error: $error")
-                            (activity as SignInActivity).showAlert("Error", error)
-                        }
-                    }
-                } ?: run {
-                    binding.progressBar.visibility = View.GONE
-                    binding.joinButton.isClickable = true
-                    binding.createButton.isClickable = true
-
-                    error?.also {
-                        Log.e(TAG, "error: $error")
-                        (activity as SignInActivity).showAlert("Error", error)
-                    }
+                room?.also {
+                    Log.d(TAG, "room retrieved - name: ${room.room.name}, domain: ${room.domain}, token: ${room.room.token}")
+                    navigateToRoom(room)
+                }
+                error?.also {
+                    Log.e(TAG, "error: $error")
+                    (activity as SignInActivity).showAlert("Error", error)
                 }
             }
         } else {
@@ -141,36 +128,23 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun createWaitingRoom(roomName: String) {
+    private fun createRoom(roomName: String) {
         if (!roomName.isEmpty()) {
             binding.progressBar.visibility = View.VISIBLE
             binding.createButton.isClickable = false
             binding.createButton.isClickable = false
-            viewModel.getConfiguration { config, error ->
-                config?.also {
-                    viewModel.createWaitingRoom(roomName) { room, error ->
-                        binding.progressBar.visibility = View.GONE
-                        binding.createButton.isClickable = true
-                        binding.createButton.isClickable = true
+            viewModel.createRoom(roomName, RealtimeSettings.applicationServer()) { room, error ->
+                binding.progressBar.visibility = View.GONE
+                binding.createButton.isClickable = true
+                binding.createButton.isClickable = true
 
-                        room?.also {
-                            Log.d(TAG, "room retrieved - name: ${room.room.name}, token: ${room.room.token}")
-                            navigateToRoom(room, config.VCS_HOST)
-                        }
-                        error?.also {
-                            Log.e(TAG, "error: $error")
-                            (activity as SignInActivity).showAlert("Error", error)
-                        }
-                    }
-                } ?: run {
-                    binding.progressBar.visibility = View.GONE
-                    binding.createButton.isClickable = true
-                    binding.createButton.isClickable = true
-
-                    error?.also {
-                        Log.e(TAG, "error: ${error}")
-                        (activity as SignInActivity).showAlert("Error", error)
-                    }
+                room?.also {
+                    Log.d(TAG, "room retrieved - name: ${room.room.name}, domain: ${room.domain}, token: ${room.room.token}")
+                    navigateToRoom(room)
+                }
+                error?.also {
+                    Log.e(TAG, "error: $error")
+                    (activity as SignInActivity).showAlert("Error", error)
                 }
             }
         } else {
@@ -178,7 +152,7 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun navigateToRoom(room: Room, host: String) {
+    private fun navigateToRoom(room: Room) {
         (activity as SignInActivity).roomName = room.room.name
         (activity as SignInActivity).name = binding.personName.editText?.text.toString()
 
@@ -193,8 +167,7 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
             name = binding.personName.editText?.text.toString(),
             audio = audio,
             video = video,
-            host = host,
-            hdVideo = RealtimeSdkSettings.defaultHdVideo()
+            host = room.domain
         )
         findNavController().navigate(action)
     }
@@ -222,14 +195,8 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         context?.let { ctx ->
             val manager = ctx.packageManager
             try {
-//            This gets the application version. We want the individual versions of the demo and and the sdk.
-//            To do that we add 'VERSION_NAME' to each of their build.gradle files
-//
-//                activity?.application?.packageName?.let { pkgName ->
-//                    val info = manager.getPackageInfo(pkgName, 0)
-//                    binding.appVersionText.setText(info.versionName)
-//                }
-
+                // This gets the application version. We want the individual versions of the demo and and the sdk.
+                // To do that we add 'VERSION_NAME' to each of their build.gradle files
                 binding.appVersionText.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME))
                 binding.sdkVersionText.setText(getString(R.string.sdk_version, net.atos.vcs.realtime_sdk.BuildConfig.VERSION_NAME))
             } catch (e: Exception) {

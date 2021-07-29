@@ -21,10 +21,7 @@ import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import net.atos.vcs.realtime.demo.databinding.RoomActivityBinding
-import net.atos.vcs.realtime.sdk.MediaStreamVideoView
-import net.atos.vcs.realtime.sdk.RealtimeSdk
-import net.atos.vcs.realtime.sdk.RemoteParticipant
-import net.atos.vcs.realtime.sdk.RoomOptions
+import net.atos.vcs.realtime.sdk.*
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 
@@ -73,7 +70,7 @@ class RoomActivity : AppCompatActivity() {
         }
 
         Log.d(TAG, "Received...\nhost: ${args.host}\ntoken: ${args.token}\nroom name: ${args.roomName}" +
-                "\nname: ${args.name}\naudio: ${args.audio}\nvideo: ${args.video}\nHD video: ${args.hdVideo}")
+                "\nname: ${args.name}\naudio: ${args.audio}\nvideo: ${args.video}")
 
         setupDisplayParameters()
 
@@ -100,10 +97,13 @@ class RoomActivity : AppCompatActivity() {
     private fun getRoomOptions(): RoomOptions {
         return RoomOptions(
             host = args.host,
+            name = args.name,
             audio = args.audio,
             video = args.video,
-            hdVideo = args.hdVideo,
-            name = args.name
+            hdVideo = RealtimeSettings.defaultHdVideo(),
+            delayLocalStream = RealtimeSettings.delayLocalStream(),
+            onlyRelayCandidates = RealtimeSettings.onlyRelayCandidates(),
+            automaticGainControl = RealtimeSettings.autoGainControl()
         )
     }
 

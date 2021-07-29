@@ -29,12 +29,14 @@ data class Config(
     val VCS_HOST: String
 )
 
-class ApplicationRepository {
+class ApplicationRepository(
+    private val server: String
+) {
     private val service: ApplicationService
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://sdk-demo.virtualcareservices.net/")
+            .baseUrl("https://$server/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

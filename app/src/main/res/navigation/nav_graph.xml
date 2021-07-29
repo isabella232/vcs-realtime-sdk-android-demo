@@ -49,9 +49,6 @@
         <argument
             android:name="host"
             app:argType="string" />
-        <argument
-            android:name="hdVideo"
-            app:argType="boolean" />
     </activity>
     />
 </navigation>

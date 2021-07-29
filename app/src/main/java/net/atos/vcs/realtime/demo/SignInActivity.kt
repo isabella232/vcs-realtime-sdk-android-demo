@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import net.atos.vcs.realtime.sdk.RealtimeSdk
 import net.atos.vcs.realtime.sdk.LogWriter
+import net.atos.vcs.realtime.sdk.RealtimeSettings
 
 private const val ROOM_NAME = "ROOM_NAME"
 private const val NAME = "NAME"
@@ -21,6 +22,7 @@ class SignInActivity : AppCompatActivity() {
         roomName = savedInstanceState?.getString(ROOM_NAME, "") ?: ""
         name = savedInstanceState?.getString(NAME, "") ?: ""
         setContentView(R.layout.sign_in_activity)
+        RealtimeSettings.initialize(applicationContext)
         RealtimeSdk.initialize(applicationContext, null, LogWriter.LogLevel.DEBUG)
     }
 
