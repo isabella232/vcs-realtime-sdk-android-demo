@@ -24,6 +24,7 @@ class LocalVideoView @JvmOverloads constructor(
     ) {
         super.init(sharedContext, rendererEvents)
         setMirror(true)
+        setEnableHardwareScaler(true)
 
         // Setting this eliminates the the need to call setZOrderOnTop() each time a remote view is added. It also
         // makes the switch camera icon remain on top of the local view.
