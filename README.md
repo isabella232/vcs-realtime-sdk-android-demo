@@ -26,6 +26,11 @@ dependencies {
 }
 ```
 
+The application server address can be configured from within the demo application's settings. The default address is [VCS realtime SDK Demo](https://sdk-demo.virtualcareservices.net/)
+
+![settings](https://user-images.githubusercontent.com/4389724/127666467-9bb285cf-da46-4b21-b3a3-7f3e30ac9100.png)
+
+
 ### More Information
 
 Where to find more information about the VCS Realtime SDKs and APIs.
