@@ -167,7 +167,8 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
             name = binding.personName.editText?.text.toString(),
             audio = audio,
             video = video,
-            host = room.domain
+            host = room.domain,
+            country = binding.country.editText?.text.toString()
         )
         findNavController().navigate(action)
     }

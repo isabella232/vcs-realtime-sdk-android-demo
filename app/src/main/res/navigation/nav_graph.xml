@@ -49,6 +49,10 @@
         <argument
             android:name="host"
             app:argType="string" />
+        <argument
+            android:name="country"
+            app:argType="string"
+            app:nullable="true" />
     </activity>
     />
 </navigation>

@@ -95,9 +95,12 @@ class RoomActivity : AppCompatActivity() {
     }
 
     private fun getRoomOptions(): RoomOptions {
+        var info: Map<String, Any>? = null
+        args.country?.let { info = mapOf<String, Any>("country" to it) }
         return RoomOptions(
             host = args.host,
             name = args.name,
+            participantInfo = info,
             audio = args.audio,
             video = args.video,
             hdVideo = RealtimeSettings.defaultHdVideo(),
@@ -269,8 +272,8 @@ class RoomActivity : AppCompatActivity() {
         dialog.setMessage(message)
         dialog.setButton(
             AlertDialog.BUTTON_NEUTRAL, "OK"
-        ) { dialog, _ ->
-            dialog.dismiss()
+        ) { dlg, _ ->
+            dlg.dismiss()
             if (viewModel.leftRoom.value == true) {
                 finish()
             }
