@@ -68,6 +68,8 @@ dependencies {
     // WebRTC
     implementation 'atos.virtual.care:libwebrtc:M90'
 
+    implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-runtime:3.0.0-vcs01'
+
     // LifecycleService
     implementation "androidx.lifecycle:lifecycle-service:2.3.1"
 
