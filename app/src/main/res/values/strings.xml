@@ -22,7 +22,7 @@
     <string name="room_view_fragment_label">Room Fragment</string>
     <string name="sdk_version">SDK Version: %1s</string>
     <string name="sign_in_fragment_label">Sign in Fragment</string>
-    <string name="title_text">vcs-realtime-sdk-android</string>
+    <string name="title_text">vcs-realtime-sdk-android demo</string>
     <string name="video">Video</string>
     <string name="your_name">Your name</string>
 </resources>

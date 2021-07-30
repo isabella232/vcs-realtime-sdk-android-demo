@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B9E4E1"
+    android:background="@color/teal"
     tools:context="net.atos.vcs.realtime.demo.SignInFragment">
 
     <ImageButton
@@ -60,8 +60,8 @@
         android:layout_marginEnd="80dp"
         android:minWidth="100dp"
         android:text="@string/create_room"
-        app:cornerRadius="8dp"
         app:backgroundTint="@color/dark_blue"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resource_spinner" />
@@ -166,8 +166,7 @@
         android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/country"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/country" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/progress_bar"
