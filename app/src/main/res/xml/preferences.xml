@@ -33,7 +33,7 @@
             android:defaultValue="false"
             android:key="only_relay_candidates"
             android:title="Only Relay ICE Candidates"
-            android:summary="If true, restricts calls to go through a TURN server" />
+            android:summary="If true, a new connection is configured to only accept relay candidates. This includes, for example, those candidates relayed by a STUN or TURN server." />
 
     </PreferenceCategory>
 
