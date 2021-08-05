@@ -23,7 +23,7 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         roomName = savedInstanceState?.getString(ROOM_NAME, "") ?: ""
         name = savedInstanceState?.getString(NAME, "") ?: ""
-        country = savedInstanceState?.getString(COUNTRY, null) ?: null
+        country = savedInstanceState?.getString(COUNTRY, null)
         setContentView(R.layout.sign_in_activity)
         RealtimeSettings.initialize(applicationContext)
         RealtimeSdk.initialize(applicationContext, null, LogWriter.LogLevel.DEBUG)

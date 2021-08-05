@@ -193,16 +193,13 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun displayVersions() {
-        context?.let { ctx ->
-            val manager = ctx.packageManager
-            try {
-                // This gets the application version. We want the individual versions of the demo and and the sdk.
-                // To do that we add 'VERSION_NAME' to each of their build.gradle files
-                binding.appVersionText.setText(getString(R.string.app_version, BuildConfig.VERSION_NAME))
-                binding.sdkVersionText.setText(getString(R.string.sdk_version, net.atos.vcs.realtime_sdk.BuildConfig.VERSION_NAME))
-            } catch (e: Exception) {
-                Log.e(TAG, "Error getting package versions: ${e.message ?: e}")
-            }
+        try {
+            // This gets the application version. We want the individual versions of the demo and and the sdk.
+            // To do that we add 'VERSION_NAME' to each of their build.gradle files
+            binding.appVersionText.text = getString(R.string.app_version, BuildConfig.VERSION_NAME)
+            binding.sdkVersionText.text = getString(R.string.sdk_version, net.atos.vcs.realtime_sdk.BuildConfig.VERSION_NAME)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting package versions: ${e.message ?: e}")
         }
     }
 
