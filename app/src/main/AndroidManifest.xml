@@ -35,7 +35,7 @@
         </activity>
 
         <service
-            android:foregroundServiceType="mediaProjection"
+            android:foregroundServiceType="camera|microphone"
             android:name=".service.ActiveCallService"/>
     </application>
 
