@@ -23,7 +23,7 @@ The dependencies are also added to the app module (such as app/build.gradle):
 ```xml
 dependencies {
     ...
-    implementation 'atos.virtual.care:vcs-realtime-sdk:0.2.0'
+    implementation 'atos.virtual.care:vcs-realtime-sdk:0.2.1'
     implementation 'atos.virtual.care:libwebrtc:M90'
     implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-runtime:3.0.0-vcs01'
 }
