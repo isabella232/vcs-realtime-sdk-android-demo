@@ -6,14 +6,15 @@ This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demo
 
 The demo app can be built to run on a device or the simulator. Note that the simulator does not provide video.
 
-The root gradle file contains the references to the SDK and WebRTC images
+The root gradle file contains the references to the SDK, WebRTC, and apollo-android images
 ```xml
 ...
 allprojects {
     repositories {
         ...
         maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-android/repo/' }
-        maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/webrtc-android/repo/' }
+        maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/webrtc-android/repo/' 
+        maven { url 'https://jitpack.io' } // Temporarily needed for apollo-android
     }
 }
 ```
@@ -21,8 +22,10 @@ allprojects {
 The dependencies are also added to the app module (such as app/build.gradle):
 ```xml
 dependencies {
+    ...
     implementation 'atos.virtual.care:vcs-realtime-sdk:0.2.0'
     implementation 'atos.virtual.care:libwebrtc:M90'
+    implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-runtime:3.0.0-vcs01'
 }
 ```
 
@@ -36,5 +39,5 @@ The application server address can be configured from within the demo applicatio
 Where to find more information about the VCS Realtime SDKs and APIs.
 
 * For more information on the VCS SDK family, see the [VCS realtime SDK page](https://sdk.virtualcareservices.net/)
-* For more information on the VCS iOS SDK, see the [guide for iOS realtime SDK](https://sdk.virtualcareservices.net/sdks/android)
-* A list of all APIs for the iOS SDK is available at the [reference API for iOS realtime SDK](https://sdk.virtualcareservices.net/reference/android)
+* For more information on the VCS iOS SDK, see the [guide for Android realtime SDK](https://sdk.virtualcareservices.net/sdks/android)
+* A list of all APIs for the iOS SDK is available at the [reference API for Android realtime SDK](https://sdk.virtualcareservices.net/reference/android)
