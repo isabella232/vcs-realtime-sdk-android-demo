@@ -39,5 +39,5 @@ The application server address can be configured from within the demo applicatio
 Where to find more information about the VCS Realtime SDKs and APIs.
 
 * For more information on the VCS SDK family, see the [VCS realtime SDK page](https://sdk.virtualcareservices.net/)
-* For more information on the VCS iOS SDK, see the [guide for Android realtime SDK](https://sdk.virtualcareservices.net/sdks/android)
-* A list of all APIs for the iOS SDK is available at the [reference API for Android realtime SDK](https://sdk.virtualcareservices.net/reference/android)
+* For more information on the VCS Android SDK, see the [guide for Android realtime SDK](https://sdk.virtualcareservices.net/sdks/android)
+* A list of all APIs for the Android SDK is available at the [reference API for Android realtime SDK](https://sdk.virtualcareservices.net/reference/android)
