@@ -6,7 +6,7 @@ This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demo
 
 The demo app can be built to run on a device or the simulator. Note that the simulator does not provide video.
 
-The root gradle file contains the references to the SDK, WebRTC, and apollo-android images
+The root gradle file contains the references to the SDK, WebRTC, and apollo-android images.
 ```xml
 ...
 allprojects {
@@ -19,17 +19,17 @@ allprojects {
 }
 ```
 
-The dependencies are also added to the app module (such as app/build.gradle):
+The dependencies are also added to the app module (such as app/build.gradle). The version of SDK and WebRTC dependencies should be updated to the latest released version.
 ```xml
 dependencies {
     ...
-    implementation 'atos.virtual.care:vcs-realtime-sdk:0.2.1'
+    implementation 'atos.virtual.care:vcs-realtime-sdk:0.3.0'
     implementation 'atos.virtual.care:libwebrtc:M90'
     implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-runtime:3.0.0-vcs01'
 }
 ```
 
-The application server address can be configured from within the demo application's settings. The default address is [VCS realtime SDK Demo](https://sdk-demo.virtualcareservices.net/)
+The application server address needs to be configured from within the demo application's settings.
 
 ![settings](https://user-images.githubusercontent.com/4389724/127666467-9bb285cf-da46-4b21-b3a3-7f3e30ac9100.png)
 

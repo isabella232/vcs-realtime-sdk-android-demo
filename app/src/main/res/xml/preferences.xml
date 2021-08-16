@@ -6,7 +6,7 @@
         android:title="Settings">
 
         <EditTextPreference
-            android:defaultValue="sdk-demo.virtualcareservices.net"
+            android:defaultValue=""
             android:key="application_server"
             android:title="Application server"
             android:summary="Server that provides room tokens based on 'Room name' and API key" />

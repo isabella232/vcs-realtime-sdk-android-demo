@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference
 
 object RealtimeSettings {
     private var context: WeakReference<Context>? = null
-    private const val defaultApplicationServer = "sdk-demo.virtualcareservices.net"
+    private const val defaultApplicationServer = ""
 
     fun initialize(context: Context) {
         this.context = WeakReference(context)
