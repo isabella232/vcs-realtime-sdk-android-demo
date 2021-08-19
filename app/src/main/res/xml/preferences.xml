@@ -2,14 +2,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="server_config_category"
-        android:title="Settings">
+        android:key="server_category">
 
         <EditTextPreference
             android:defaultValue=""
             android:key="application_server"
             android:title="Application server"
             android:summary="Server that provides room tokens based on 'Room name' and API key" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="credentials_category">
 
         <EditTextPreference
             android:defaultValue=""
@@ -23,6 +27,11 @@
             android:title="Password"
             android:inputType="textPassword"
             android:summary="Password to authenticate creating a room" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="webrtc_category">
 
         <SwitchPreference
             android:defaultValue="true"
