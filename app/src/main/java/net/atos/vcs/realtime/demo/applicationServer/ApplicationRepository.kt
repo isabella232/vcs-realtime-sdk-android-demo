@@ -26,7 +26,8 @@ data class RoomName(
 )
 
 data class Config(
-    val VCS_HOST: String
+    val VCS_HOST: String,
+    val AUTH_TYPE: String?
 )
 
 class ApplicationRepository(
@@ -48,4 +49,6 @@ class ApplicationRepository(
     suspend fun getRoom(roomName: String) = service.getRoom(roomName)
 
     suspend fun createRoom(roomName: String) = service.createRoom(RoomName(name = roomName))
+
+    suspend fun createRoom(roomName: String, authorization: String) = service.createRoom(RoomName(name = roomName), authorization = authorization)
 }

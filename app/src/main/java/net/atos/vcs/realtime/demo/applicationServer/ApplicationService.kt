@@ -22,4 +22,11 @@ interface ApplicationService {
     )
     @POST("/api/room")
     suspend fun createRoom(@Body body: RoomName): Room
+
+    @Headers(
+        "Accept: */*",
+        "Content-Type: application/json"
+    )
+    @POST("/api/room")
+    suspend fun createRoom(@Body body: RoomName, @Header("Authorization") authorization: String): Room
 }

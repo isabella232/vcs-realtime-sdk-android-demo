@@ -11,6 +11,19 @@
             android:title="Application server"
             android:summary="Server that provides room tokens based on 'Room name' and API key" />
 
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="username"
+            android:title="Username"
+            android:summary="Username to authenticate creating a room" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="password"
+            android:title="Password"
+            android:inputType="textPassword"
+            android:summary="Password to authenticate creating a room" />
+
         <SwitchPreference
             android:defaultValue="true"
             android:key="auto_gain_control"

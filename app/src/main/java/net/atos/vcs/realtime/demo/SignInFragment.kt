@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,9 +21,10 @@ import com.google.android.material.snackbar.Snackbar
 import net.atos.vcs.realtime.demo.applicationServer.Room
 import net.atos.vcs.realtime.demo.databinding.SignInFragmentBinding
 import net.atos.vcs.realtime.sdk.RealtimeSettings
+import retrofit2.HttpException
 import java.lang.Exception
 
-class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener, CredentialsDialog.CredentialsDialogListener {
 
     private lateinit var binding: SignInFragmentBinding
     private val TAG = "${this.javaClass.kotlin.simpleName}"
@@ -51,7 +53,7 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         // activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
@@ -68,14 +70,14 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.roomName.editText?.setText((activity as SignInActivity).roomName)
         binding.personName.editText?.setText((activity as SignInActivity).name)
 
-        binding.progressBar.visibility = View.GONE
+        setUIBusy(false)
 
         binding.joinButton.setOnClickListener {
             getRoom(binding.roomName.editText?.text.toString())
         }
 
         binding.createButton.setOnClickListener {
-            createRoom(binding.roomName.editText?.text.toString())
+            createRoomPreCheck()
         }
 
         binding.settingsButton.setOnClickListener {
@@ -104,23 +106,24 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun getRoom(roomName: String) {
-        if (!roomName.isEmpty()) {
-            binding.progressBar.visibility = View.VISIBLE
-            binding.joinButton.isClickable = false
-            binding.createButton.isClickable = false
-
+        if (roomName.isNotEmpty()) {
+            setUIBusy(true)
             viewModel.getRoom(roomName, RealtimeSettings.applicationServer()) { room, error ->
-                binding.progressBar.visibility = View.GONE
-                binding.joinButton.isClickable = true
-                binding.createButton.isClickable = true
+                setUIBusy(false)
 
-                room?.also {
-                    Log.d(TAG, "room retrieved - name: ${room.room.name}, domain: ${room.domain}, token: ${room.room.token}")
-                    navigateToRoom(room)
+                room?.let {
+                    Log.d(TAG, "room retrieved - name: ${it.room.name}, domain: ${it.domain}, token: ${it.room.token}")
+                    navigateToRoom(it)
                 }
-                error?.also {
-                    Log.e(TAG, "error: $error")
-                    (activity as SignInActivity).showAlert("Error", error)
+                error?.let { e ->
+                    var errorMessage = e.localizedMessage ?: e.toString()
+                    if (e is HttpException) {
+                        when (e.code()) {
+                            404 -> errorMessage = getText(R.string.room_not_found).toString()
+                        }
+                    }
+                    Log.e(TAG, "error: $errorMessage")
+                    (activity as SignInActivity).showAlert("Error", errorMessage)
                 }
             }
         } else {
@@ -128,28 +131,62 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
         }
     }
 
-    private fun createRoom(roomName: String) {
-        if (!roomName.isEmpty()) {
-            binding.progressBar.visibility = View.VISIBLE
-            binding.createButton.isClickable = false
-            binding.createButton.isClickable = false
-            viewModel.createRoom(roomName, RealtimeSettings.applicationServer()) { room, error ->
-                binding.progressBar.visibility = View.GONE
-                binding.createButton.isClickable = true
-                binding.createButton.isClickable = true
-
-                room?.also {
-                    Log.d(TAG, "room retrieved - name: ${room.room.name}, domain: ${room.domain}, token: ${room.room.token}")
-                    navigateToRoom(room)
+    private fun createRoomPreCheck() {
+        val roomName = binding.roomName.editText?.text.toString()
+        if (roomName.isNotEmpty()) {
+            setUIBusy(true)
+            viewModel.getConfig(RealtimeSettings.applicationServer()) { config, error ->
+                setUIBusy(false)
+                config?.let {
+                    Log.d(TAG, "Config retrieved - VCS_HOST: ${it.VCS_HOST}, AUTH_TYPE: ${it.AUTH_TYPE}")
+                    if (it.AUTH_TYPE == "BASIC_AUTH") {
+                        checkCredentials()
+                    } else {
+                        createRoom(null)
+                    }
                 }
-                error?.also {
-                    Log.e(TAG, "error: $error")
-                    (activity as SignInActivity).showAlert("Error", error)
+                error?.let { e ->
+                    val errorMessage = e.localizedMessage ?: e.toString()
+                    Log.e(TAG, "error: $errorMessage")
+                    (activity as SignInActivity).showAlert("Error", errorMessage)
                 }
             }
         } else {
             showMessage(getText(R.string.room_name_missing).toString())
         }
+    }
+
+    /**
+     * createRoomPreCheck() should be called before this method is executed.
+     */
+    private fun createRoom(basicAuth: BasicAuthCredentials?) {
+        val roomName = binding.roomName.editText?.text.toString()
+        setUIBusy(true)
+        viewModel.createRoom(roomName, RealtimeSettings.applicationServer(), basicAuth) { room, error ->
+            setUIBusy(false)
+
+            room?.let {
+                Log.d(TAG, "room retrieved - name: ${it.room.name}, domain: ${it.domain}, token: ${it.room.token}")
+                navigateToRoom(it)
+            }
+            error?.let { e ->
+                var errorMessage = e.localizedMessage ?: e.toString()
+                if (e is HttpException) {
+                    when (e.code()) {
+                        401 -> errorMessage = getText(R.string.invalid_username_password).toString()
+                        409 -> errorMessage = getText(R.string.room_already_exists).toString()
+                     }
+                }
+                Log.e(TAG, "error: $errorMessage")
+                (activity as SignInActivity).showAlert("Error", errorMessage)
+            }
+        }
+    }
+
+    private fun checkCredentials() {
+        val dialogFragment = CredentialsDialog()
+        dialogFragment.listener = this
+        dialogFragment.show(childFragmentManager, "credentials")
     }
 
     private fun navigateToRoom(room: Room) {
@@ -171,6 +208,12 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
             country = binding.country.editText?.text.toString()
         )
         findNavController().navigate(action)
+    }
+
+    private fun setUIBusy(busy: Boolean) {
+        binding.progressBar.visibility = if (busy) { View.VISIBLE } else { View.GONE }
+        binding.joinButton.isClickable = !busy
+        binding.createButton.isClickable = !busy
     }
 
     private fun showMessage(message: String) {
@@ -287,6 +330,17 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>) {
         // Another interface callback
         Log.d(TAG, "Nothing selected")
+    }
+
+    // CredentialsDialogListener
+
+    override fun onDialogPositiveClick(dialog: DialogFragment, username: String, password: String) {
+        Log.d(TAG, "Create room with credentials")
+        createRoom(BasicAuthCredentials(username = username, password = password))
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        Log.d(TAG, "Cancelled create room")
     }
 
 }

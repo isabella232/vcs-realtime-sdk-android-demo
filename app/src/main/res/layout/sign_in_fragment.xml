@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="80dp"
         android:minWidth="100dp"
-        android:text="@string/create_room"
+        android:text="@string/create"
         app:backgroundTint="@color/dark_blue"
         app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

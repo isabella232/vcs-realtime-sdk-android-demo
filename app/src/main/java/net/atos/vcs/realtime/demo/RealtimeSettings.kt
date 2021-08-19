@@ -6,7 +6,6 @@ import java.lang.ref.WeakReference
 
 object RealtimeSettings {
     private var context: WeakReference<Context>? = null
-    private const val defaultApplicationServer = ""
 
     fun initialize(context: Context) {
         this.context = WeakReference(context)
@@ -29,7 +28,23 @@ object RealtimeSettings {
     }
 
     fun applicationServer (): String {
-        return sharedStringPreference("application_server", defaultApplicationServer)
+        return sharedStringPreference("application_server", "")
+    }
+
+    fun username (): String {
+        return sharedStringPreference("username", "")
+    }
+
+    fun username(value: String) {
+        setSharedStringPreference("username", value)
+    }
+
+    fun password (): String {
+        return sharedStringPreference("password", "")
+    }
+
+    fun password(value: String) {
+        setSharedStringPreference("password", value)
     }
 
     private fun sharedBooleanPreference(key: String, default: Boolean = false): Boolean {
@@ -46,5 +61,12 @@ object RealtimeSettings {
             return sharedPreferences.getString(key, default) ?: default
         }
         return default
+    }
+
+    private fun setSharedStringPreference(key: String, value: String) {
+        context?.get()?.let { context ->
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+            sharedPreferences.edit().putString(key, value).commit()
+        }
     }
 }
