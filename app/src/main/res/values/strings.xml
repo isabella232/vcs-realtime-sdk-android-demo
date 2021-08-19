@@ -29,6 +29,7 @@
     <string name="sdk_version">SDK Version: %1s</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_in_fragment_label">Sign in Fragment</string>
+    <string name="system_unreachable">The VCS system is not reachable at this time</string>
     <string name="title_text">vcs-realtime-sdk-android demo</string>
     <string name="username">Username</string>
     <string name="video">Video</string>

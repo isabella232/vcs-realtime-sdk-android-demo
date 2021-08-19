@@ -175,7 +175,8 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener, Credentia
                     when (e.code()) {
                         401 -> errorMessage = getText(R.string.invalid_username_password).toString()
                         409 -> errorMessage = getText(R.string.room_already_exists).toString()
-                     }
+                        500 -> errorMessage = getText(R.string.system_unreachable).toString()
+                    }
                 }
                 Log.e(TAG, "error: $errorMessage")
                 (activity as SignInActivity).showAlert("Error", errorMessage)
