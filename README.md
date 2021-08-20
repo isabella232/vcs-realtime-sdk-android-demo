@@ -1,5 +1,5 @@
 # VCS Realtime SDK Sample App for Android
-![demo-screenshot](https://user-images.githubusercontent.com/4389724/126681575-494fd176-77e2-441b-89a1-ef007354d094.png)
+![SignIn](https://user-images.githubusercontent.com/4389724/130239263-c3e598be-6d57-464a-b59d-bf02bd297ff7.png)
 
 This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demonstrate how to join virtual rooms and interact with other participants via audio and/or video.
 ### Build and Run
@@ -29,10 +29,9 @@ dependencies {
 }
 ```
 
-The application server address needs to be configured from within the demo application's settings.
+The application server address needs to be configured from within the demo application's settings. Basic authentication credentials to create a room may be configured in settings. The demo application will prompt for these credentials when creating a room and they can be entered and saved at that time as well.
 
-![settings](https://user-images.githubusercontent.com/4389724/127666467-9bb285cf-da46-4b21-b3a3-7f3e30ac9100.png)
-
+![Settings](https://user-images.githubusercontent.com/4389724/130242609-d993f59b-8115-4343-a21d-4d56b9508f97.png)
 
 ### More Information
 
