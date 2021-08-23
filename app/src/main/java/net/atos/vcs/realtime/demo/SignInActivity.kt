@@ -3,6 +3,7 @@ package net.atos.vcs.realtime.demo
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import net.atos.vcs.realtime.sdk.RealtimeSdk
 import net.atos.vcs.realtime.sdk.LogWriter
@@ -27,6 +28,7 @@ class SignInActivity : AppCompatActivity() {
         setContentView(R.layout.sign_in_activity)
         RealtimeSettings.initialize(applicationContext)
         RealtimeSdk.initialize(applicationContext, null, LogWriter.LogLevel.DEBUG)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
