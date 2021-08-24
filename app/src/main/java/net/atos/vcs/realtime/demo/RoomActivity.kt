@@ -1,6 +1,8 @@
 package net.atos.vcs.realtime.demo
 
+import android.Manifest
 import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -30,6 +32,8 @@ class RoomActivity : AppCompatActivity() {
 
     private lateinit var binding: RoomActivityBinding
     private val TAG = "${this.javaClass.kotlin.qualifiedName}"
+    private val PERMISSION_REQUEST_CAMERA = 0
+    private val PERMISSION_REQUEST_AUDIO = 1
 
     @Inject
     lateinit var roomManager: RoomManager
@@ -88,6 +92,50 @@ class RoomActivity : AppCompatActivity() {
 
         // Join the room
         viewModel.joinRoom(getRoomToken(), getRoomOptions())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+        viewModel.resumeVideoRendering()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+        viewModel.pauseVideoRendering()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
+        binding.localView.dispose()
+        roomParticipants.forEach { rp -> rp.renderer.get()?.dispose() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CAMERA -> {
+                if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel.toggleVideo()
+                }
+            }
+            PERMISSION_REQUEST_AUDIO -> {
+                if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    viewModel.toggleMute()
+                }
+            }
+        }
     }
 
     private fun getRoomToken(): String {
@@ -199,13 +247,21 @@ class RoomActivity : AppCompatActivity() {
         // Click - VIDEO
         binding.videoButton.setOnClickListener {
             Log.d(TAG, "Video button selected")
-            viewModel.toggleVideo()
+            if (viewModel.videoEnabled.value == true || hasPermission(Manifest.permission.CAMERA)) {
+                viewModel.toggleVideo()
+            } else {
+                askPermission(Manifest.permission.CAMERA)
+            }
         }
 
         // Click - MUTE
         binding.microphoneButton.setOnClickListener {
             Log.d(TAG, "Microphone button selected")
-            viewModel.toggleMute()
+            if (viewModel.muted.value == false || hasPermission(Manifest.permission.RECORD_AUDIO)) {
+                viewModel.toggleMute()
+            } else {
+                askPermission(Manifest.permission.RECORD_AUDIO)
+            }
         }
 
         // Click - SPEAKER
@@ -219,30 +275,6 @@ class RoomActivity : AppCompatActivity() {
             Log.d(TAG, "Camera switch button selected")
             viewModel.switchCamera()
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(TAG, "onResume")
-        viewModel.resumeVideoRendering()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(TAG, "onPause")
-        viewModel.pauseVideoRendering()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(TAG, "onDestroy")
-        binding.localView.dispose()
-        roomParticipants.forEach { rp -> rp.renderer.get()?.dispose() }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart")
     }
 
     private fun showLocalVideo(enabled: Boolean) {
@@ -358,5 +390,51 @@ class RoomActivity : AppCompatActivity() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return RoomViewModel(roomManager) as T
         }
+    }
+
+    private fun hasPermission(permission: String): Boolean {
+        return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestCode(permission: String): Int? {
+        when (permission) {
+            Manifest.permission.CAMERA -> { return PERMISSION_REQUEST_CAMERA }
+            Manifest.permission.RECORD_AUDIO -> { return PERMISSION_REQUEST_AUDIO }
+        }
+        return null
+    }
+
+    private fun askPermission(permission: String) {
+        when {
+            shouldShowRequestPermissionRationale(permission) -> {
+                // Provide an additional rationale to the user if the permission was not granted
+                // and the user would benefit from additional context for the use of the permission.
+                requestCode(permission)?.let { code ->
+                    showPermissionDialog(permission, code)
+                }
+            }
+            else -> {
+                // You can directly ask for the permission.
+                requestCode(permission)?.let { code ->
+                    requestPermissions(arrayOf(permission), code)
+                }
+            }
+        }
+    }
+
+    private fun showPermissionDialog(permission: String, requestCode: Int) {
+        AlertDialog.Builder(this)
+            .setTitle("Permission $permission Required")
+            .setMessage("Permit application to use $permission")
+            .setPositiveButton("Grant") { dialog, _ ->
+                Log.i(TAG, "Permission granted: $permission")
+                dialog.dismiss()
+                requestPermissions(arrayOf(permission), requestCode)
+            }
+            .setNegativeButton("Deny") { dialog, _ ->
+                Log.i(TAG, "Permission denied: $permission")
+                dialog.dismiss()
+            }
+            .show()
     }
 }
