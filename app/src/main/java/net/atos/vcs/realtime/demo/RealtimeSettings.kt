@@ -27,6 +27,10 @@ object RealtimeSettings {
         return sharedBooleanPreference("only_relay_candidates", false)
     }
 
+    fun monitorQoS(): Boolean {
+        return sharedBooleanPreference("monitor_qos", false)
+    }
+
     fun applicationServer (): String {
         return sharedStringPreference("application_server", "")
     }
