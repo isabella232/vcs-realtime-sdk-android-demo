@@ -153,7 +153,6 @@ class RoomActivity : AppCompatActivity() {
             video = args.video,
             hdVideo = RealtimeSettings.defaultHdVideo(),
             delayLocalStream = RealtimeSettings.delayLocalStream(),
-            onlyRelayCandidates = RealtimeSettings.onlyRelayCandidates(),
             automaticGainControl = RealtimeSettings.autoGainControl(),
             monitorQoS = RealtimeSettings.monitorQoS()
         )

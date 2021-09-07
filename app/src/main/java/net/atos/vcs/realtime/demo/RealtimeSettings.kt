@@ -23,10 +23,6 @@ object RealtimeSettings {
         return sharedBooleanPreference("delay_local_stream", false)
     }
 
-    fun onlyRelayCandidates(): Boolean {
-        return sharedBooleanPreference("only_relay_candidates", false)
-    }
-
     fun monitorQoS(): Boolean {
         return sharedBooleanPreference("monitor_qos", false)
     }
