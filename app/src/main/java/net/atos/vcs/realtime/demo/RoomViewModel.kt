@@ -12,7 +12,6 @@ class RoomViewModel(
     ) : ViewModel()  {
 
     private val TAG = "${this.javaClass.kotlin.simpleName}"
-    private var roomManagerJob: Job? = null
 
     init {
         Log.d(TAG, "Initialize RoomViewModel")
@@ -22,7 +21,6 @@ class RoomViewModel(
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG, "onCleared")
-        roomManagerJob?.cancel()
     }
 
     private val _roomName = MutableLiveData<String>()
@@ -59,7 +57,9 @@ class RoomViewModel(
     val leftRoom: LiveData<Boolean> = _leftRoom
 
     fun leaveRoom() {
-        roomManager.leaveRoom()
+        viewModelScope.launch {
+            roomManager.leaveRoom()
+        }
     }
 
     fun toggleMute() {
@@ -94,7 +94,7 @@ class RoomViewModel(
 
     private fun subscribeToRoomEvents() {
         roomManager.roomEvents.let { sharedFlow ->
-            roomManagerJob = viewModelScope.launch {
+            viewModelScope.launch {
                 Log.d(TAG, "Listening for RoomEvents...")
                 sharedFlow.collect { observeRoomEvents(it) }
             }

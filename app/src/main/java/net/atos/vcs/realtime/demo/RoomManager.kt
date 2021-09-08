@@ -3,27 +3,27 @@ package net.atos.vcs.realtime.demo
 import android.content.Context
 import android.media.AudioManager
 import android.util.Log
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
 import net.atos.vcs.realtime.demo.service.ActiveCallService
 import net.atos.vcs.realtime.sdk.*
 import java.lang.Exception
 
-class RoomManager(private val context: Context) {
+class RoomManager(private val context: Context,
+                  private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
     private val TAG = "${this.javaClass.kotlin.qualifiedName}"
 
     private val mutableRoomEvents: MutableSharedFlow<RoomEvent> = MutableSharedFlow()
     val roomEvents: SharedFlow<RoomEvent> = mutableRoomEvents
 
     private var room: Room? = null
-    private val roomListener = RoomListener()
     private var joinInProgress = false
-    internal val roomScope = CoroutineScope(Dispatchers.IO)
+    private val roomListener  by lazy { RoomListener() }
+    internal val eventScope by lazy { CoroutineScope(defaultDispatcher) }
 
-    fun joinRoom(token: String, options: RoomOptions) {
+    suspend fun joinRoom(token: String, options: RoomOptions) {
         if (room != null || joinInProgress) {
             Log.d(TAG, "Room already joined or being joined, ignore.")
             return
@@ -31,19 +31,23 @@ class RoomManager(private val context: Context) {
 
         joinInProgress = true
 
-        roomScope.launch {
+        withContext(defaultDispatcher) {
             try {
                 RealtimeSdk.joinRoom(token, options, roomListener)
             } catch (e: Exception) {
                 joinInProgress = false
-                Log.e(TAG, "Error joining waiting room: $e")
-                sendRoomEvent(RoomEvent.roomJoinError("Error joining waiting room: $e"))
+                if (e.cause is CancellationException) {
+                    Log.i(TAG, "Subscription cancelled")
+                } else {
+                    Log.e(TAG, "Error joining waiting room: $e")
+                    sendRoomEvent(RoomEvent.roomJoinError("Error joining waiting room: $e"))
+                }
             }
         }
     }
 
-    fun leaveRoom() {
-        roomScope.launch {
+    suspend fun leaveRoom() {
+        withContext(defaultDispatcher) {
             try {
                 room?.also { r ->
                     r.leave()
@@ -141,7 +145,7 @@ class RoomManager(private val context: Context) {
 
     private fun sendRoomEvent(roomEvent: RoomEvent) {
         Log.d(TAG,"sendRoomEvent: $roomEvent")
-        roomScope.launch { mutableRoomEvents.emit(roomEvent) }
+        eventScope.launch { mutableRoomEvents.emit(roomEvent) }
     }
 
     inner class RoomListener: RealtimeSdkListener {
