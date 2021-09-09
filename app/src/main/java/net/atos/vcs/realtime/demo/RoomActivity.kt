@@ -195,6 +195,7 @@ class RoomActivity : AppCompatActivity() {
         // Observe - Remote Participants
         viewModel.remoteParticipants.observe(this) { participants ->
             Log.d(TAG, "Remote participant set, count ${participants.size}")
+            roomParticipants.forEach { rp -> rp.renderer.get()?.dispose() }
             roomParticipants.clear()
             binding.remoteViewsLayout.removeAllViews()
             participants.forEach { p ->
@@ -219,7 +220,6 @@ class RoomActivity : AppCompatActivity() {
 
         viewModel.leftRoom.observe(this) { left ->
             if (left) {
-                roomParticipants.clear()
                 navigateToSignIn()
             }
         }
@@ -352,7 +352,7 @@ class RoomActivity : AppCompatActivity() {
         val index = roomParticipants.indexOfFirst { it.address == participant.address() }
         if (index > -1) {
             binding.remoteViewsLayout.removeViewAt(index)
-            roomParticipants.removeAt(index)
+            roomParticipants.removeAt(index).renderer.get()?.dispose()
 
             val count = binding.remoteViewsLayout.childCount
             if (count > 0) {
