@@ -27,7 +27,7 @@ class SignInActivity : AppCompatActivity() {
         country = savedInstanceState?.getString(COUNTRY, null)
         setContentView(R.layout.sign_in_activity)
         RealtimeSettings.initialize(applicationContext)
-        RealtimeSdk.initialize(applicationContext, null, LogWriter.LogLevel.DEBUG)
+        RealtimeSdk.initialize(applicationContext)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 

@@ -11,22 +11,6 @@ object RealtimeSettings {
         this.context = WeakReference(context)
     }
 
-    fun autoGainControl(): Boolean {
-        return sharedBooleanPreference("auto_gain_control", true)
-    }
-
-    fun defaultHdVideo(): Boolean {
-        return sharedBooleanPreference("default_hd_video", true)
-    }
-
-    fun delayLocalStream(): Boolean {
-        return sharedBooleanPreference("delay_local_stream", false)
-    }
-
-    fun monitorQoS(): Boolean {
-        return sharedBooleanPreference("monitor_qos", false)
-    }
-
     fun applicationServer (): String {
         return sharedStringPreference("application_server", "")
     }
@@ -45,6 +29,28 @@ object RealtimeSettings {
 
     fun password(value: String) {
         setSharedStringPreference("password", value)
+    }
+
+    fun autoGainControl(): Boolean {
+        return RealtimeSettings.sharedBooleanPreference("auto_gain_control", true)
+    }
+
+    fun defaultHdVideo(): Boolean {
+        return sharedBooleanPreference("default_hd_video", true)
+    }
+
+    object Options {
+        fun hdVideo(): Boolean {
+            return sharedBooleanPreference("hd_video", true)
+        }
+
+        fun monitorQoS(): Boolean {
+            return sharedBooleanPreference("monitor_qos", false)
+        }
+
+        fun delayLocalStream(): Boolean {
+            return false // TODO: return sharedBooleanPreference("delay_local_stream", false)
+        }
     }
 
     private fun sharedBooleanPreference(key: String, default: Boolean = false): Boolean {

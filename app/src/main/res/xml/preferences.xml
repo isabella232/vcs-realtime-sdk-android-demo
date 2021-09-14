@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
-        android:key="server_category">
+        android:key="settings_category"
+        app:summary="Global SDK Settings"
+        app:title="Settings">
 
         <EditTextPreference
             android:defaultValue=""
             android:key="application_server"
-            android:title="Application server"
-            android:summary="Server that provides room tokens based on 'Room name' and API key" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="credentials_category">
+            android:summary="Server that provides room tokens based on 'Room name' and API key"
+            android:title="Application server" />
 
         <EditTextPreference
             android:defaultValue=""
@@ -28,11 +26,6 @@
             android:inputType="textPassword"
             android:summary="Password to authenticate creating a room" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:key="webrtc_category">
-
         <SwitchPreference
             android:defaultValue="true"
             android:key="auto_gain_control"
@@ -42,21 +35,35 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="default_hd_video"
-            android:title="HD Video"
+            android:title="Default HD Video"
             android:summary="Share local video in HD quality" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="options_category"
+        android:summary="Session options"
+        app:title="Options">
+
         <SwitchPreference
-            android:defaultValue="false"
-            android:key="delay_local_stream"
-            android:title="Delay local stream"
-            android:summary="If true, the local media stream is only created after least two participants are connected to a room" />
+            android:defaultValue="true"
+            android:key="hd_video"
+            android:summary="Share local video in HD quality for next session"
+            android:title="HD Video" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="monitor_qos"
-            android:title="Monitor QoS"
-            android:summary="If true, a new connection is configured to monitor and log WebRTC call Quality of Service stats" />
+            android:summary="If true, a new connection is configured to monitor and log WebRTC call Quality of Service stats"
+            android:title="Monitor QoS" />
 
+        <!--
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="delay_local_stream"
+            android:summary="If true, the local media stream is only created after least two participants are connected to a room"
+            android:title="Delay local stream" />
+        -->
     </PreferenceCategory>
 
 </PreferenceScreen>

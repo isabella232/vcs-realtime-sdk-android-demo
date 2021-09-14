@@ -76,6 +76,8 @@ class RoomActivity : AppCompatActivity() {
         Log.d(TAG, "Received...\nhost: ${args.host}\ntoken: ${args.token}\nroom name: ${args.roomName}" +
                 "\nname: ${args.name}\naudio: ${args.audio}\nvideo: ${args.video}")
 
+        setupSdkSettings()
+
         setupDisplayParameters()
 
         // Initialize the local rendering view and set it in the local participant if the room is already joined or
@@ -151,11 +153,16 @@ class RoomActivity : AppCompatActivity() {
             participantInfo = info,
             audio = args.audio,
             video = args.video,
-            hdVideo = RealtimeSettings.defaultHdVideo(),
-            delayLocalStream = RealtimeSettings.delayLocalStream(),
-            automaticGainControl = RealtimeSettings.autoGainControl(),
-            monitorQoS = RealtimeSettings.monitorQoS()
+            hdVideo = RealtimeSettings.Options.hdVideo(),
+            delayLocalStream = RealtimeSettings.Options.delayLocalStream(),
+            monitorStats = RealtimeSettings.Options.monitorQoS()
         )
+    }
+
+    private fun setupSdkSettings() {
+        RealtimeSdk.Settings.autoGainControl = RealtimeSettings.autoGainControl()
+        RealtimeSdk.Settings.defaultHdVideo =  RealtimeSettings.defaultHdVideo()
+        RealtimeSdk.Settings.logLevel = LogWriter.LogLevel.DEBUG
     }
 
     private fun setupObservers() {
