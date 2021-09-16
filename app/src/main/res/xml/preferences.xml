@@ -57,13 +57,12 @@
             android:summary="If true, a new connection is configured to monitor and log WebRTC call Quality of Service stats"
             android:title="Monitor QoS" />
 
-        <!--
         <SwitchPreference
             android:defaultValue="false"
             android:key="delay_local_stream"
             android:summary="If true, the local media stream is only created after least two participants are connected to a room"
             android:title="Delay local stream" />
-        -->
+
     </PreferenceCategory>
 
 </PreferenceScreen>

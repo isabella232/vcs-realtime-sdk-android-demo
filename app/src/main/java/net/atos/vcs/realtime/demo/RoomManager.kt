@@ -201,7 +201,9 @@ class RoomManager(private val context: Context,
         }
 
         override fun onLocalStreamUpdated(room: Room, participant: LocalParticipant) {
-            Log.d(TAG, "Local stream updated")
+            val videoEnabled = room.hasVideo()
+            Log.d(TAG, "Local stream updated, video ${if (videoEnabled) {"enabled"} else {"disabled"}}")
+            sendRoomEvent(RoomEvent.videoEnabled(videoEnabled))
         }
 
         override fun onRemoteStreamUpdated(room: Room, participant: RemoteParticipant) {
