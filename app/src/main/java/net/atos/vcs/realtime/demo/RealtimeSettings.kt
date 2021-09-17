@@ -49,7 +49,7 @@ object RealtimeSettings {
         }
 
         fun delayLocalStream(): Boolean {
-            return return sharedBooleanPreference("delay_local_stream", false)
+            return sharedBooleanPreference("delay_local_stream", false)
         }
     }
 
