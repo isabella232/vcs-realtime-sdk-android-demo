@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
     // Realtime SDK
-    implementation 'atos.virtual.care:vcs-realtime-sdk:0.6.1'
+    implementation 'atos.virtual.care:vcs-realtime-sdk:0.6.2'
 
     // WebRTC
     implementation 'atos.virtual.care:libwebrtc:M90.0.1'
