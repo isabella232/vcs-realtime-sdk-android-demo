@@ -4,8 +4,7 @@
 
     <PreferenceCategory
         android:key="settings_category"
-        app:summary="Global SDK Settings"
-        app:title="Settings">
+        app:title="Global SDK Settings">
 
         <EditTextPreference
             android:defaultValue=""
@@ -42,8 +41,7 @@
 
     <PreferenceCategory
         android:key="options_category"
-        android:summary="Session options"
-        app:title="Options">
+        app:title="Session options">
 
         <SwitchPreference
             android:defaultValue="true"
