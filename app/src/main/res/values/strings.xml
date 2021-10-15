@@ -34,4 +34,59 @@
     <string name="username">Username</string>
     <string name="video">Video</string>
     <string name="your_name">Your name</string>
+
+    <!--- SignIn Screen descriptors -->
+    <string name="settings_button_desc">Enter settings</string>
+    <string name="room_input_desc">Enter room name</string>
+    <string name="name_input_desc">Enter your name</string>
+    <string name="country_input_desc">Enter country name</string>
+    <string name="create_room_desc">Create room</string>
+    <string name="join_room_desc">Join room</string>
+    <string name="audio_video_desc">Audio and video selection</string>
+
+    <!--- Call Screen descriptors -->
+    <string name="switch_camera_desc">Switch camera</string>
+    <string name="camera_desc">Enable or disable video</string>
+    <string name="speaker_desc">Enable or disable speaker</string>
+    <string name="mute_desc">Enable or disable mute</string>
+    <string name="leave_room_desc">Leave room</string>
+    <string name="local_video_desc">Local video view</string>
+    <string name="remote_video_desc">Remote video view</string>
+    <string name="remote_user_name_desc">Remote user name</string>
+    <string name="room_name_desc">Room name</string>
+
+    <!--- Preferences descriptors -->
+    <string name="app_server_desc">Application server</string>
+    <string name="app_server_input_desc">Enter application server</string>
+    <string name="username_desc">Username</string>
+    <string name="username_input_desc">Enter username</string>
+    <string name="password_desc">Password</string>
+    <string name="password_input_desc">Enter password</string>
+    <string name="auto_gain_control_desc">Enable or disable auto gain control</string>
+    <string name="default_hd_desc">Enable or disable default HD</string>
+    <string name="hd_video_desc">Enable or disable HD video</string>
+    <string name="monitor_qos_desc">Enable or disable QoS monitoring</string>
+    <string name="delay_local_stream_desc">Enable or disable delay of local stream</string>
+
+    <!--- Preferences Screen -->
+    <string name="back_button_desc">Navigate back</string>
+    <string name="global_sdk_title">Global SDK Settings</string>
+    <string name="app_server_title">Application server</string>
+    <string name="app_server_summary">Server that provides room tokens based on \'Room name\' and API key</string>
+    <string name="username_title">Username</string>
+    <string name="username_summary">Username to authenticate creating a room</string>
+    <string name="password_title">Password</string>
+    <string name="password_summary">Password to authenticate creating a room</string>
+    <string name="auto_gain_control_title">Automatic Gain Control</string>
+    <string name="auto_gain_control_summary">Enable or disable Automatic Gain Control on the audio track</string>
+    <string name="default_hd_video_title">Default HD Video</string>
+    <string name="default_hd_video_summary">Share local video in HD quality</string>
+
+    <string name="session_options_title">Session options</string>
+    <string name="hd_video_title">HD Video</string>
+    <string name="hd_video_summary">Share local video in HD quality for next session</string>
+    <string name="monitor_qos_title">Monitor QoS</string>
+    <string name="monitor_qos_summary">If true, a new connection is configured to monitor and log WebRTC call Quality of Service stats</string>
+    <string name="delay_local_stream_title">Delay local stream</string>
+    <string name="delay_local_stream_summary">If true, the local media stream is only created after least two participants are connected to a room</string>
 </resources>

@@ -4,62 +4,62 @@
 
     <PreferenceCategory
         android:key="settings_category"
-        app:title="Global SDK Settings">
+        app:title="@string/global_sdk_title">
 
         <EditTextPreference
             android:defaultValue=""
-            android:key="application_server"
-            android:summary="Server that provides room tokens based on 'Room name' and API key"
-            android:title="Application server" />
+            android:key="app_server"
+            android:summary="@string/app_server_summary"
+            android:title="@string/app_server_title" />
 
         <EditTextPreference
             android:defaultValue=""
             android:key="username"
-            android:title="Username"
-            android:summary="Username to authenticate creating a room" />
+            android:summary="@string/username_summary"
+            android:title="@string/username_title" />
 
         <EditTextPreference
             android:defaultValue=""
-            android:key="password"
-            android:title="Password"
             android:inputType="textPassword"
-            android:summary="Password to authenticate creating a room" />
+            android:key="password"
+            android:summary="@string/password_summary"
+            android:title="@string/password_title" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="auto_gain_control"
-            android:title="Automatic Gain Control"
-            android:summary="Enable or disable Automatic Gain Control on the audio track" />
+            android:summary="@string/auto_gain_control_summary"
+            android:title="@string/auto_gain_control_title" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="default_hd_video"
-            android:title="Default HD Video"
-            android:summary="Share local video in HD quality" />
+            android:summary="@string/default_hd_video_summary"
+            android:title="@string/default_hd_video_title" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="options_category"
-        app:title="Session options">
+        app:title="@string/session_options_title">
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="hd_video"
-            android:summary="Share local video in HD quality for next session"
-            android:title="HD Video" />
+            android:summary="@string/hd_video_summary"
+            android:title="@string/hd_video_title" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="monitor_qos"
-            android:summary="If true, a new connection is configured to monitor and log WebRTC call Quality of Service stats"
-            android:title="Monitor QoS" />
+            android:summary="@string/monitor_qos_summary"
+            android:title="@string/monitor_qos_title" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="delay_local_stream"
-            android:summary="If true, the local media stream is only created after least two participants are connected to a room"
-            android:title="Delay local stream" />
+            android:summary="@string/delay_local_stream_summary"
+            android:title="@string/delay_local_stream_title" />
 
     </PreferenceCategory>
 

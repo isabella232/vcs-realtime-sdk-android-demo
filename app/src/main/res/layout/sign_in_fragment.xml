@@ -9,11 +9,12 @@
     tools:context="net.atos.vcs.realtime.demo.SignInFragment">
 
     <ImageButton
+        android:contentDescription="@string/settings_button_desc"
         android:id="@+id/settings_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#00FFFFFF"
         android:padding="0dp"
         android:src="@drawable/action_settings"
@@ -41,6 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <com.google.android.material.button.MaterialButton
+        android:contentDescription="@string/join_room_desc"
         android:id="@+id/join_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/resource_spinner" />
 
     <com.google.android.material.button.MaterialButton
+        android:contentDescription="@string/create_room_desc"
         android:id="@+id/create_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,6 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/title_text">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:contentDescription="@string/room_input_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true" />
@@ -109,6 +113,7 @@
         app:layout_constraintTop_toBottomOf="@+id/room_name">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:contentDescription="@string/name_input_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true" />
@@ -135,6 +140,7 @@
         app:layout_constraintVertical_bias="0">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:contentDescription="@string/country_input_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
@@ -160,6 +166,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
+        android:contentDescription="@string/audio_video_desc"
         android:id="@+id/resource_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
