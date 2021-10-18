@@ -12,7 +12,7 @@ object RealtimeSettings {
     }
 
     fun applicationServer (): String {
-        return sharedStringPreference("application_server", "")
+        return sharedStringPreference("app_server", "")
     }
 
     fun username (): String {
