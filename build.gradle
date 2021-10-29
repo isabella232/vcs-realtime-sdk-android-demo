@@ -23,7 +23,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }
         maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-android/repo/' }
         maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/webrtc-android/repo/' }
     }
