@@ -63,12 +63,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
     // Realtime SDK
-    implementation 'atos.virtual.care:vcs-realtime-sdk:0.7.1'
+    implementation 'atos.virtual.care:vcs-realtime-sdk:0.8.1'
 
     // WebRTC
     implementation 'atos.virtual.care:libwebrtc:M90.0.1'
 
-    implementation 'com.apollographql.apollo3:apollo-runtime:3.0.0-beta01'
+    implementation 'com.apollographql.apollo3:apollo-runtime:3.0.0'
 
     // LifecycleService
     implementation "androidx.lifecycle:lifecycle-service:2.3.1"
