@@ -14,7 +14,6 @@ allprojects {
         ...
         maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-android/repo/' }
         maven { url 'https://raw.github.com/ATOS-VIRTUAL-CARE/webrtc-android/repo/' 
-        maven { url 'https://jitpack.io' } // Temporarily needed for apollo-android
     }
 }
 ```
@@ -23,9 +22,9 @@ The dependencies are also added to the app module (such as app/build.gradle). Th
 ```xml
 dependencies {
     ...
-    implementation 'atos.virtual.care:vcs-realtime-sdk:0.3.0'
-    implementation 'atos.virtual.care:libwebrtc:M90'
-    implementation 'com.github.ATOS-VIRTUAL-CARE.apollo-android:apollo-runtime:3.0.0-vcs01'
+    implementation 'atos.virtual.care:vcs-realtime-sdk:x.x.x'
+    implementation 'atos.virtual.care:libwebrtc:M98'
+    implementation 'com.apollographql.apollo3:apollo-runtime:3.0.0'
 }
 ```
 
