@@ -2,7 +2,6 @@ package net.atos.vcs.realtime.demo
 
 import net.atos.vcs.realtime.sdk.LocalParticipant
 import net.atos.vcs.realtime.sdk.RemoteParticipant
-import net.atos.vcs.realtime.sdk.Room
 
 sealed class RoomEvent {
     data class roomJoined(val roomName: String,

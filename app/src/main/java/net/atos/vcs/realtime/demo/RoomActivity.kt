@@ -31,9 +31,6 @@ import javax.inject.Inject
 class RoomActivity : AppCompatActivity() {
 
     private lateinit var binding: RoomActivityBinding
-    private val TAG = "${this.javaClass.kotlin.qualifiedName}"
-    private val PERMISSION_REQUEST_CAMERA = 0
-    private val PERMISSION_REQUEST_AUDIO = 1
 
     @Inject
     lateinit var roomManager: RoomManager
@@ -449,5 +446,11 @@ class RoomActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private companion object {
+        private const val TAG = "RoomActivity"
+        private const val PERMISSION_REQUEST_CAMERA = 0
+        private const val PERMISSION_REQUEST_AUDIO = 1
     }
 }

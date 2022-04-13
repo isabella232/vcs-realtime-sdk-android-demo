@@ -6,12 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import net.atos.vcs.realtime.sdk.RealtimeSdk
-import net.atos.vcs.realtime.sdk.LogWriter
 import net.atos.vcs.realtime.sdk.RealtimeSettings
-
-private const val ROOM_NAME = "ROOM_NAME"
-private const val NAME = "NAME"
-private const val COUNTRY = "COUNTRY"
 
 @AndroidEntryPoint
 class SignInActivity : AppCompatActivity() {
@@ -48,4 +43,9 @@ class SignInActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+    private companion object {
+        private const val ROOM_NAME = "ROOM_NAME"
+        private const val NAME = "NAME"
+        private const val COUNTRY = "COUNTRY"
+    }
 }

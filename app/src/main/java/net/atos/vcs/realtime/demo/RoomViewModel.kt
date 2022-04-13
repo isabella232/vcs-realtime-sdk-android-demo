@@ -3,15 +3,12 @@ package net.atos.vcs.realtime.demo
 import android.util.Log
 import androidx.lifecycle.*
 import net.atos.vcs.realtime.sdk.*
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class RoomViewModel(
         private val roomManager: RoomManager
     ) : ViewModel()  {
-
-    private val TAG = "${this.javaClass.kotlin.simpleName}"
 
     init {
         Log.d(TAG, "Initialize RoomViewModel")
@@ -150,5 +147,9 @@ class RoomViewModel(
                 _alert.value = roomEvent.error
             }
         }
+    }
+
+    private companion object {
+        private const val TAG = "RoomViewModel"
     }
 }

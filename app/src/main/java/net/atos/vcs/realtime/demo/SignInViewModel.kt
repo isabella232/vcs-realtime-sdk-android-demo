@@ -7,7 +7,6 @@ import net.atos.vcs.realtime.demo.applicationServer.ApplicationRepository
 import net.atos.vcs.realtime.demo.applicationServer.Room
 import kotlinx.coroutines.launch
 import net.atos.vcs.realtime.demo.applicationServer.Config
-import retrofit2.HttpException
 import java.lang.Exception
 
 data class BasicAuthCredentials (
@@ -16,7 +15,6 @@ data class BasicAuthCredentials (
 )
 
 class SignInViewModel() : ViewModel() {
-    private val TAG = "${this.javaClass.kotlin.simpleName}"
 
     fun getConfig(applicationServer: String, callback: (config: Config?, error: Exception?) -> Unit) {
         viewModelScope.launch {
@@ -63,5 +61,4 @@ class SignInViewModel() : ViewModel() {
             }
         }
     }
-
 }

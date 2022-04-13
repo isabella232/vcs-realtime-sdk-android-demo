@@ -13,7 +13,9 @@ import java.lang.Exception
 class RoomManager(private val context: Context,
                   private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-    private val TAG = "${this.javaClass.kotlin.qualifiedName}"
+    private companion object {
+        private const val TAG = "RoomManager"
+    }
 
     private val mutableRoomEvents: MutableSharedFlow<RoomEvent> = MutableSharedFlow()
     val roomEvents: SharedFlow<RoomEvent> = mutableRoomEvents
@@ -222,7 +224,5 @@ class RoomManager(private val context: Context,
             joinInProgress = false
             sendRoomEvent(RoomEvent.registrationRejected(room.name() ?: "", reason))
         }
-
     }
-
 }

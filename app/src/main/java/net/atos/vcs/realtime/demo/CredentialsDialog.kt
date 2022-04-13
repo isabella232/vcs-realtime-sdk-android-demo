@@ -3,12 +3,9 @@ package net.atos.vcs.realtime.demo
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
 import android.text.Layout
 import android.text.SpannableString
-import android.text.TextWatcher
 import android.text.style.AlignmentSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +15,6 @@ import androidx.fragment.app.DialogFragment
 import net.atos.vcs.realtime.sdk.RealtimeSettings
 
 class CredentialsDialog : DialogFragment() {
-
-    private val TAG = "${this.javaClass.kotlin.simpleName}"
 
     private var dialogView: View? = null
 
@@ -107,5 +102,4 @@ class CredentialsDialog : DialogFragment() {
     private fun save(): Boolean {
         return dialogView?.findViewById<CheckBox>(R.id.checkBox)?.isChecked == true
     }
-
 }

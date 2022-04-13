@@ -41,9 +41,10 @@ class ActiveCallService : LifecycleService() {
         fun stopService(context: Context) {
             Intent(context, ActiveCallService::class.java).let { context.stopService(it) }
         }
+
+        private const val TAG = "ActiveCallService"
     }
 
-    private val TAG = "${this.javaClass.kotlin.qualifiedName}"
     private lateinit var notificationManager: NotificationManagerCompat
 
     private val pendingIntent

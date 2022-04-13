@@ -27,7 +27,6 @@ import java.lang.Exception
 class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener, CredentialsDialog.CredentialsDialogListener {
 
     private lateinit var binding: SignInFragmentBinding
-    private val TAG = "${this.javaClass.kotlin.simpleName}"
     private var audio = false
     private var video = false
 
@@ -344,4 +343,7 @@ class SignInFragment : Fragment(), AdapterView.OnItemSelectedListener, Credentia
         Log.d(TAG, "Cancelled create room")
     }
 
+    private companion object {
+        private const val TAG = "SignInFragment"
+    }
 }

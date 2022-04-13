@@ -2,7 +2,6 @@ package net.atos.vcs.realtime.demo
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import androidx.annotation.UiThread
 import net.atos.vcs.realtime.sdk.MediaStreamVideoView
 import org.webrtc.EglBase
