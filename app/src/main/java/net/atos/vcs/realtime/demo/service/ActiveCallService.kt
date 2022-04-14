@@ -51,7 +51,7 @@ class ActiveCallService : LifecycleService() {
         get() =
             Intent(this, RoomActivity::class.java).let { notificationIntent ->
                 notificationIntent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-                PendingIntent.getActivity(this, 0, notificationIntent, 0)
+                PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
             }
 
     @Inject

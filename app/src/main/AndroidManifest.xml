@@ -26,7 +26,8 @@
         <activity
             android:name=".SignInActivity"
             android:theme="@style/Theme.RealtimeSdkDemo.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustPan">
+            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
