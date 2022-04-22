@@ -9,7 +9,9 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
@@ -17,6 +19,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.children
 import androidx.core.view.setPadding
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navArgs
@@ -36,8 +39,9 @@ class RoomActivity : AppCompatActivity() {
     lateinit var roomManager: RoomManager
 
     data class RoomParticipant(
-        var address: String,
-        var renderer: WeakReference<MediaStreamVideoView>
+        val address: String,
+        val renderer: WeakReference<MediaStreamVideoView>,
+        val name: String
     )
     private val roomParticipants = mutableListOf<RoomParticipant>()
 
@@ -56,6 +60,8 @@ class RoomActivity : AppCompatActivity() {
     private val viewModel: RoomViewModel by viewModels { RoomViewModelFactory(roomManager) }
 
     private var alertDialog: AlertDialog? = null
+
+    private val messageHandler  by lazy { MessageHandler() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -234,12 +240,22 @@ class RoomActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.alert.observe(this) { text ->
-            showAlert(getText(R.string.error).toString(), text)
+        viewModel.alert.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { text ->
+                showAlert(getText(R.string.error).toString(), text)
+            }
         }
 
-        viewModel.message.observe(this) { text ->
-            showMessage(text)
+        viewModel.toast.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { text ->
+                showMessage(text)
+            }
+        }
+
+        viewModel.message.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { data ->
+                showAlert(data.sender, data.message)
+            }
         }
 
         viewModel.roomName.observe(this) { name ->
@@ -343,12 +359,24 @@ class RoomActivity : AppCompatActivity() {
                 remoteVideoView.init(RealtimeSdk.getRootEglContext(), null)
                 val textView = view.findViewById<TextView>(R.id.participant_name)
                 textView.text = participant.name() ?: ""
+                val messageButton = view.findViewById<ImageButton>(R.id.message_button)
+                messageButton.contentDescription = participant.address()
+                messageButton.setOnClickListener { button ->
+                    var name = ""
+                    if (button.parent is ViewGroup) {
+                        (button.parent as ViewGroup).children.find { view -> view.id == R.id.participant_name }?.let { tv ->
+                            name = (tv as TextView).text.toString()
+                        }
+                    }
+                    showMessageDialog(name, button.contentDescription.toString())
+                }
                 binding.remoteViewsLayout.addView(view, binding.remoteViewsLayout.childCount)
                 participant.setVideoView(WeakReference(remoteVideoView))
                 roomParticipants.add(
                     RoomParticipant(
                         address = participant.address(),
-                        renderer = WeakReference(remoteVideoView)
+                        renderer = WeakReference(remoteVideoView),
+                        name = participant.name() ?: ""
                     )
                 )
             }
@@ -446,6 +474,23 @@ class RoomActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun showMessageDialog(name: String, targetAddress: String) {
+        val dialogFragment = MessageDialog(name, targetAddress)
+        dialogFragment.listener = messageHandler
+        dialogFragment.show(supportFragmentManager, "message")
+    }
+
+    inner class MessageHandler: MessageDialog.MessageDialogListener {
+       override fun onDialogPositiveClick(dialog: DialogFragment, message: String, address: String?) {
+            Log.d(TAG, "Send message to ${address ?: "all participants"}")
+            viewModel.sendMessage(message, address)
+        }
+
+        override fun onDialogNegativeClick(dialog: DialogFragment) {
+            Log.d(TAG, "Cancelled send message")
+        }
     }
 
     private companion object {

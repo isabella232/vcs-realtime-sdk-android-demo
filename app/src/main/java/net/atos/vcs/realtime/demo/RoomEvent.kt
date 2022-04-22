@@ -18,4 +18,7 @@ sealed class RoomEvent {
     data class videoEnabled(val video: Boolean) : RoomEvent()
     data class speakerOn(val speaker: Boolean) : RoomEvent()
     data class error(val error: String) : RoomEvent()
+    data class dataChannelOpen(val remoteParticipant: RemoteParticipant): RoomEvent()
+    data class dataChannelClosed(val remoteParticipant: RemoteParticipant): RoomEvent()
+    data class dataChannelMessage(val remoteParticipant: RemoteParticipant, val message: String): RoomEvent()
 }

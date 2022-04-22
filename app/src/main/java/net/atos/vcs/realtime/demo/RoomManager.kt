@@ -123,6 +123,10 @@ class RoomManager(private val context: Context,
         }
     }
 
+    fun sendMessage(message: String, address: String?) {
+        room?.sendMessageToParticipant(message, address)
+    }
+
     fun pauseVideoRendering() {
         room?.run {
             localParticipant().detach()
@@ -223,6 +227,21 @@ class RoomManager(private val context: Context,
             Log.w(TAG, "Registration to room (${room.name()}) rejected: $reason")
             joinInProgress = false
             sendRoomEvent(RoomEvent.registrationRejected(room.name() ?: "", reason))
+        }
+
+        override fun onDataChannelOpen(room: Room, participant: RemoteParticipant) {
+            Log.d(TAG, "Data channel open for room (${room.name()}), participant (${participant.name()})")
+            sendRoomEvent(RoomEvent.dataChannelOpen(participant))
+        }
+
+        override fun onDataChannelClosed(room: Room, participant: RemoteParticipant) {
+            Log.d(TAG, "Data channel closed for room (${room.name()}), participant (${participant.name()})")
+            sendRoomEvent(RoomEvent.dataChannelClosed(participant))
+        }
+
+        override fun onDataChannelMessage(room: Room, participant: RemoteParticipant, message: String) {
+            Log.d(TAG, "Data channel message for room (${room.name()}) received from (${participant.name()})")
+            sendRoomEvent(RoomEvent.dataChannelMessage(participant, message))
         }
     }
 }

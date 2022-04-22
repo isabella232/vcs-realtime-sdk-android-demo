@@ -20,6 +20,11 @@ class RoomViewModel(
         Log.d(TAG, "onCleared")
     }
 
+    data class MessageData (
+        val sender: String,
+        val message: String
+    )
+
     private val _roomName = MutableLiveData<String>()
     val roomName: LiveData<String> = _roomName
 
@@ -44,11 +49,14 @@ class RoomViewModel(
     private val _videoEnabled = MutableLiveData<Boolean>(false)
     val videoEnabled: LiveData<Boolean> = _videoEnabled
 
-    private val _alert = MutableLiveData<String>()
-    val alert: LiveData<String> = _alert
+    private val _alert = MutableLiveData<SingleLiveEvent<String>>()
+    val alert: LiveData<SingleLiveEvent<String>> = _alert
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String> = _message
+    private val _toast = MutableLiveData<SingleLiveEvent<String>>()
+    val toast: LiveData<SingleLiveEvent<String>> = _toast
+
+    private val _message = MutableLiveData<SingleLiveEvent<MessageData>>()
+    val message: LiveData<SingleLiveEvent<MessageData>> = _message
 
     private val _leftRoom = MutableLiveData<Boolean>(false)
     val leftRoom: LiveData<Boolean> = _leftRoom
@@ -89,6 +97,10 @@ class RoomViewModel(
         }
     }
 
+    fun sendMessage(message: String, address: String?) {
+        roomManager.sendMessage(message, address)
+    }
+
     private fun subscribeToRoomEvents() {
         roomManager.roomEvents.let { sharedFlow ->
             viewModelScope.launch {
@@ -108,7 +120,7 @@ class RoomViewModel(
                 _remoteParticipants.value = roomEvent.remoteParticipants.toMutableList()
             }
             is RoomEvent.roomJoinError -> {
-                _alert.value = roomEvent.error
+                _alert.value = SingleLiveEvent(roomEvent.error)
                 _leftRoom.value = true
             }
             is RoomEvent.roomLeft -> {
@@ -132,7 +144,7 @@ class RoomViewModel(
                 }
             }
             is RoomEvent.registrationRejected -> {
-                _alert.value = "Registration to room (${roomEvent.roomName}) rejected: ${roomEvent.reason}"
+                _alert.value = SingleLiveEvent("Registration to room (${roomEvent.roomName}) rejected: ${roomEvent.reason}")
             }
             is RoomEvent.muted -> {
                 _muted.value = roomEvent.muted
@@ -144,7 +156,13 @@ class RoomViewModel(
                 _speakerOn.value = roomEvent.speaker
             }
             is RoomEvent.error -> {
-                _alert.value = roomEvent.error
+                _alert.value = SingleLiveEvent(roomEvent.error)
+            }
+            is RoomEvent.dataChannelMessage -> {
+                _message.value = SingleLiveEvent(MessageData(
+                    sender = roomEvent.remoteParticipant.name() ?: "",
+                    message = roomEvent.message
+                ))
             }
         }
     }
