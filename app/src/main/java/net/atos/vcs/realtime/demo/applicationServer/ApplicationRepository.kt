@@ -37,7 +37,7 @@ class ApplicationRepository(
 
     init {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://$server/")
+            .baseUrl("$server/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

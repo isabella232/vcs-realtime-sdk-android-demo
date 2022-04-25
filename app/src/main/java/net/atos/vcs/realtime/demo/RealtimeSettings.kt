@@ -12,7 +12,12 @@ object RealtimeSettings {
     }
 
     fun applicationServer (): String {
-        return sharedStringPreference("app_server", "")
+        var server = sharedStringPreference("app_server", "")
+        // Default to https if nothing was specified
+        if (!server.startsWith("http")) {
+            server = "https://$server"
+        }
+        return server
     }
 
     fun username (): String {
