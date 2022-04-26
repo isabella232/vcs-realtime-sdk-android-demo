@@ -18,12 +18,13 @@ allprojects {
 }
 ```
 
-The dependencies are also added to the app module (such as app/build.gradle). The version of SDK and WebRTC dependencies should be updated to the latest released version.
+The dependencies are also added to the app module (such as app/build.gradle). The version of SDK and WebRTC dependencies should be updated to the latest released version. Also, the apollo runtime dependency should match that noted in the SDK [README](https://github.com/GLB-UCC-VCS/vcs-realtime-android-sdk#integrate-into-android-project)
 ```xml
 dependencies {
     ...
     implementation 'atos.virtual.care:vcs-realtime-sdk:x.x.x'
     implementation 'atos.virtual.care:libwebrtc:M98'
+    implementation 'com.apollographql.apollo3:apollo-runtime:x.x.x'
 }
 ```
 
