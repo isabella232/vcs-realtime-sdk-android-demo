@@ -20,5 +20,5 @@ sealed class RoomEvent {
     data class error(val error: String) : RoomEvent()
     data class dataChannelOpen(val remoteParticipant: RemoteParticipant): RoomEvent()
     data class dataChannelClosed(val remoteParticipant: RemoteParticipant): RoomEvent()
-    data class dataChannelMessage(val remoteParticipant: RemoteParticipant, val message: String): RoomEvent()
+    data class messageReceived(val remoteParticipant: RemoteParticipant, val message: String): RoomEvent()
 }

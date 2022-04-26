@@ -239,9 +239,9 @@ class RoomManager(private val context: Context,
             sendRoomEvent(RoomEvent.dataChannelClosed(participant))
         }
 
-        override fun onDataChannelMessage(room: Room, participant: RemoteParticipant, message: String) {
-            Log.d(TAG, "Data channel message for room (${room.name()}) received from (${participant.name()})")
-            sendRoomEvent(RoomEvent.dataChannelMessage(participant, message))
+        override fun onMessageReceived(room: Room, participant: RemoteParticipant, message: String) {
+            Log.d(TAG, "Message received for room (${room.name()}) from (${participant.name()})")
+            sendRoomEvent(RoomEvent.messageReceived(participant, message))
         }
     }
 }

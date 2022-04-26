@@ -158,7 +158,7 @@ class RoomViewModel(
             is RoomEvent.error -> {
                 _alert.value = SingleLiveEvent(roomEvent.error)
             }
-            is RoomEvent.dataChannelMessage -> {
+            is RoomEvent.messageReceived -> {
                 _message.value = SingleLiveEvent(MessageData(
                     sender = roomEvent.remoteParticipant.name() ?: "",
                     message = roomEvent.message

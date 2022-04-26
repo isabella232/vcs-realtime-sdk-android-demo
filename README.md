@@ -1,12 +1,12 @@
 # VCS Realtime SDK Sample App for Android
 ![SignIn](https://user-images.githubusercontent.com/4389724/130239263-c3e598be-6d57-464a-b59d-bf02bd297ff7.png)
 
-This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demonstrate how to join virtual rooms and interact with other participants via audio and/or video.
-### Build and Run
+This sample app uses the Virtual Care Service (VCS) Realtime Android SDK to demonstrate how to join virtual rooms and interact with other participants via audio and/or video. In addition to audio and video, data-channel messaging is also available.
+## Build and Run
 
 The demo app can be built to run on a device or the simulator. Note that the simulator does not provide video.
 
-The root gradle file contains the references to the SDK, WebRTC, and apollo-android images.
+The root gradle file contains the references to the SDK and WebRTC images.
 ```xml
 ...
 allprojects {
@@ -24,15 +24,21 @@ dependencies {
     ...
     implementation 'atos.virtual.care:vcs-realtime-sdk:x.x.x'
     implementation 'atos.virtual.care:libwebrtc:M98'
-    implementation 'com.apollographql.apollo3:apollo-runtime:3.0.0'
 }
 ```
+
+## Running the application server locally
+
+For development purposes the demo application server may be run locally to provide access to a test system. See [Running application locally](https://github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-web-demo#running-application-locally) for instructions. The application server address to be configured in the mobile client will be the localhost's Wi-Fi IP address and the port the application server is listening on. Also, "http://" must prefix the address when not using TLS.
+Example address: http://192.168.1.232:3001
+
+## Configuration
 
 The application server address needs to be configured from within the demo application's settings. Basic authentication credentials to create a room may be configured in settings. The demo application will prompt for these credentials when creating a room and they can be entered and saved at that time as well.
 
 ![Settings](https://user-images.githubusercontent.com/4389724/130242609-d993f59b-8115-4343-a21d-4d56b9508f97.png)
 
-### More Information
+## More Information
 
 Where to find more information about the VCS Realtime SDKs and APIs.
 
