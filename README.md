@@ -30,7 +30,7 @@ dependencies {
 
 ## Running the application server locally
 
-For development purposes the demo application server may be run locally to provide access to a test system. See [Running application locally](https://github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-web-demo#running-application-locally) for instructions. The application server address to be configured in the mobile client will be the localhost's Wi-Fi IP address and the port the application server is listening on. Also, "http://" must prefix the address when not using TLS.
+For development purposes the demo application server may be run locally to provide access to a test system. See [Running application locally](https://github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-web-demo#running-application-locally) for instructions. The application server address to be configured in the mobile client will be the localhost's IP address and the port the application server is listening on. Also, "http://" must prefix the address when not using TLS.
 Example address: http://192.168.1.232:3001
 
 ## Configuration
