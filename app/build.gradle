@@ -72,7 +72,7 @@ dependencies {
     implementation 'atos.virtual.care:libwebrtc:M98'
 
     // Apollo
-    implementation 'com.apollographql.apollo3:apollo-runtime:3.0.0'
+    implementation 'com.apollographql.apollo3:apollo-runtime:3.2.2'
 
     // LifecycleService
     implementation "androidx.lifecycle:lifecycle-service:2.4.1"
