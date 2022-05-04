@@ -18,7 +18,7 @@ allprojects {
 }
 ```
 
-The dependencies are also added to the app module (such as app/build.gradle). The version of SDK and WebRTC dependencies should be updated to the latest released version. Also, the apollo runtime dependency should match that noted in the SDK [README](https://github.com/GLB-UCC-VCS/vcs-realtime-android-sdk#integrate-into-android-project)
+The dependencies are also added to the app module (such as app/build.gradle). The version of SDK and WebRTC dependencies should be updated to the latest released version. Also, the apollo runtime dependency should match that noted in the SDK [README](https://github.com/ATOS-VIRTUAL-CARE/vcs-realtime-sdk-android/blob/master/README.md#integrate-into-android-project)
 ```xml
 dependencies {
     ...
